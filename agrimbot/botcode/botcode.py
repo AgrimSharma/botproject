@@ -1,7 +1,6 @@
 import re,os,json
 
 
-
 class AgrimBot:
     def __init__(self):
         os.chdir('..')
@@ -10,15 +9,14 @@ class AgrimBot:
     def find_response(self,question,file_name):
         with open(os.path.abspath(file_name+'.txt'), 'r') as fn:
             data = eval(fn.read())
-            resp = data.get(question, 'Please try again?')
+            resp = data.get(question.lower(), 'Please try again?')
             fn.close()
             return resp
 
-    def get_response(self,question):
-        r = re.compile(r'ai|finance|comedy|sports|technology')
-        s = r.search(question)
-        if s.group():
-            res = self.find_response(question,s.group())
+    def get_response(self, question):
+        s = re.findall(r'ai|finance|comedy|sports|technology', question)
+        if s:
+            res = self.find_response(question,s[0])
         else:
             res = self.find_response(question, 'custom.txt')
 
