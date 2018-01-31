@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</head>
+<body>
+<style>
+body {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.container{
+    margin-top: 10px;
+    display:block;
+    width:100%;
+    height:500px;
+    overflow-y:scroll;
+    padding-right: 10px;
+    }
+
+.main {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+}
+
+.main::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.main img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.main img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+.time-left {
+    float: left;
+    color: #999;
+}
+</style>
+<div class="container">
+
+</div>
+<div>
+    <footer  style="position: fixed; height: 100px; bottom: 0; width: 100%;text-align: left;">
+    <input type="text" class="col-md-6 question" name="question" />
+    <input type="button" class="butt btn btn-primary btn-sm" value="Send" />
+    </footer>
+</div>
+<script>
+$(".butt").click(function(){
+    var question = $(".question").val()
+    $('.container').append("<div class='main'><p><b>You</b> :- " +'<span>'+ question + '</span></p></div>');
+    $.ajax({
+      url: "/",
+      type: "post",
+      data: {"question": question},
+      success: function(response){
+            $('.container').append("<div class='main darker'><p><b>Bot</b> :- " + '<span>'+ response + '</span></p></div>');
+            $(".question").val("");
+          }
+       });
+
+    });
+</script>
+
+</body>
+</html>
